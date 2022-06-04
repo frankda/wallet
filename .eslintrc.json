@@ -1,3 +1,48 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "overrides": [
+    {
+      "files": [
+        "**/*.js?(x)",
+        "**/*.ts?(x)"
+      ],
+      "rules": {
+        "array-bracket-spacing": [
+          "error",
+          "always",
+          {
+            "singleValue": false
+          }
+        ],
+        "indent": [
+          2,
+          2,
+          {
+            "SwitchCase": 1
+          }
+        ],
+        "object-curly-spacing": [
+          "error",
+          "always"
+        ],
+        "quotes": [
+          2,
+          "single",
+          {
+            "avoidEscape": true
+          }
+        ],
+        "semi": [
+          2,
+          "never"
+        ],
+        "react/prop-types": [
+          0
+        ],
+        "react/no-unescaped-entities": [
+          1
+        ]
+      }
+    }
+  ]
 }
