@@ -1,5 +1,4 @@
 import { useAppDispatch, useAppSelector } from 'hooks/reduxTypeHook'
-import { useSelector } from 'react-redux'
 import { depositToWallet } from 'redux/slices/balanceSlice'
 
 const AmountDisplay = () => {
