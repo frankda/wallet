@@ -1,14 +1,17 @@
-import { useAppDispatch, useAppSelector } from 'hooks/reduxTypeHook'
-import { depositToWallet } from 'redux/slices/balanceSlice'
+import { useAppSelector } from 'hooks/reduxTypeHook'
+import { styled } from '@mui/material/styles'
+import { Box, Typography } from '@mui/material'
+
+const Container = styled(Box)`
+  margin-top: 12px;
+`
 
 const AmountDisplay = () => {
   const balance = useAppSelector((state) => state.balance.value)
-  const dispatch = useAppDispatch()
   return (
-    <div>
-      <button onClick={() => dispatch(depositToWallet(20))}>click</button>
-      {balance}
-    </div>
+    <Container>
+      <Typography variant="h5" component="h2">My balance: ${balance}</Typography>
+    </Container>
   )
 }
 
