@@ -1,23 +1,84 @@
 import { useState } from 'react'
 import Button from 'components/Button/Button'
 import BaseModal from 'components/TransferModal/BaseModal'
-import { InputAdornment, TextField } from '@mui/material'
+import { Box, InputAdornment, FormControl, MenuItem, Paper, Select, SelectChangeEvent, TextField, InputLabel, styled, Stack } from '@mui/material'
 import { useAppDispatch } from 'hooks/reduxTypeHook'
 import { send } from 'redux/slices/balanceSlice'
+import { Container } from '@mui/system'
+
+const Account = styled(Box)`
+  width: 100%;
+`
 
 const SendModal = () => {
+  const [ bankBSB, setBankBSB ] = useState('')
+  const [ bankAccount, setBankAccount ] = useState('')
   const [ modalOpen, setModalOpen ] = useState(false)
   const [ sendAmount, setSendAmount ] = useState('')
   const [ address, setAddress ] = useState('')
+  const [ sendMethod, setSendMethod ] = useState('wallet')
 
   const dispatch = useAppDispatch()
+
+  const handleSelectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSendMethod(e.target.value)
+  }
 
   const handleSendAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSendAmount(e.target.value)
   }
 
+  const handleBankBSBChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBankBSB(e.target.value)
+  }
+
+  const handleBankAccountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBankAccount(e.target.value)
+  }
+
   const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddress(e.target.value)
+  }
+
+  const renderSendMethodByType = () => {
+    switch(sendMethod) {
+      case 'wallet':
+        return (
+          <TextField
+            fullWidth
+            label="Wallet Address"
+            margin="normal"
+            onChange={handleAddressChange}
+            value={address}
+          />
+        )
+      case 'bank':
+        return (
+          <Stack
+            direction={{ xs: 'column', md: 'row' }}
+            spacing={{ xs: 0, md: 2 }}
+          >
+            <Box>
+              <TextField
+                fullWidth
+                label="BSB"
+                margin="normal"
+                onChange={handleBankBSBChange}
+                value={bankBSB}
+              />
+            </Box>
+            <Account>
+              <TextField
+                fullWidth
+                label="Account"
+                margin="normal"
+                onChange={handleBankAccountChange}
+                value={bankAccount}
+              />
+            </Account>
+          </Stack>
+        )
+    }
   }
 
   const submitDeposit = () => {
@@ -38,13 +99,20 @@ const SendModal = () => {
         onConfirm={submitDeposit}
         title="Deposit"
       >
-        <TextField
-          fullWidth
-          label="Wallet Address"
-          margin="normal"
-          onChange={handleAddressChange}
-          value={address}
-        />
+        <FormControl>
+          {/* <InputLabel id="demo-simple-select-label">Type</InputLabel> */}
+          <TextField
+            label="Type"
+            margin="normal"
+            onChange={handleSelectChange}
+            select
+            value={sendMethod}
+          >
+            <MenuItem value="bank">Bank Account</MenuItem>
+            <MenuItem value="wallet">Wallet</MenuItem>
+          </TextField>
+        </FormControl>
+        {renderSendMethodByType()}
         <TextField
           data-testid="send-amount-input"
           fullWidth
