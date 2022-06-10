@@ -21,15 +21,15 @@ const BaseModal = ({ children, isOpen, onClose, onConfirm, title }: Props) => {
       open={isOpen}
       onClose={onClose}
     >
-      <DialogTitle>
+      <DialogTitle data-testid="modal-title">
         {title}
       </DialogTitle>
       <DialogContent>
         {children}
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={onConfirm}>Confirm</Button>
+        <Button data-testid="cancel-btn" onClick={onClose}>Cancel</Button>
+        <Button data-testid="confirm-btn" onClick={onConfirm}>Confirm</Button>
       </DialogActions>
     </Dialog>
   )

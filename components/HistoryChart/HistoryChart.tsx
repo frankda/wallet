@@ -1,26 +1,35 @@
-import * as echarts from 'echarts'
-import { useEffect, useRef } from 'react'
 import ReactECharts from 'echarts-for-react'
 import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles'
+import { useAppSelector } from 'hooks/reduxTypeHook'
+
+interface Props {
+  bottom?: number
+  left?: number
+  right?: number
+  top?: number
+  type?: string
+}
 
 const ChartContainer = styled(Box)`
   margin-top: 24px;
 `
 
-const HistoryChart = () => {
+const HistoryChart = ( { bottom = 24, left = 36, right = 8, top = 8 }: Props) => {
+  const history = useAppSelector((state) => state.balance.history)
+
   const options = {
-    grid: { top: 8, right: 8, bottom: 24, left: 36 },
+    grid: { top: top, right: right, bottom: bottom, left: left },
     xAxis: {
       type: 'category',
-      data: [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ],
+      data: history.map(h => h.date),
     },
     yAxis: {
       type: 'value',
     },
     series: [
       {
-        data: [ 820, 932, 901, 934, 1290, 1330, 1320 ],
+        data: history.map(h => h.value),
         type: 'line',
         smooth: true,
       },

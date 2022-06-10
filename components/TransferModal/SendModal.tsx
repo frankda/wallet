@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import { styled } from '@mui/material/styles'
+import { useState } from 'react'
 import Button from 'components/Button/Button'
 import BaseModal from 'components/TransferModal/BaseModal'
 import { InputAdornment, TextField } from '@mui/material'
@@ -23,7 +22,7 @@ const SendModal = () => {
 
   const submitDeposit = () => {
     const sendNumber = Number(sendAmount)
-    if (isNaN(sendNumber)) {
+    if (isNaN(sendNumber) || !sendNumber) {
       return alert('Please enter a valid number')
     }
     dispatch(send(sendNumber))
@@ -47,6 +46,7 @@ const SendModal = () => {
           value={address}
         />
         <TextField
+          data-testid="send-amount-input"
           fullWidth
           label="Amount"
           helperText="Enter a number"

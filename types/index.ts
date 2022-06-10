@@ -1,4 +1,9 @@
 import store from 'redux/store'
 
-export type RootState = ReturnType<typeof store.getState>
+// Redux
 export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>
+export type History = {
+  date: string
+  value: number
+}

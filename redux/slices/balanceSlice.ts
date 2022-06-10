@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction  } from '@reduxjs/toolkit'
+import { History } from 'types'
 
-interface BalanceState {
+export interface BalanceState {
   initialized: boolean
+  history: History[]
   value: number
-  history: number[]
 }
 
 const initialState: BalanceState = {
@@ -25,11 +26,17 @@ const balanceSlice = createSlice({
     },
     deposit(state, action: PayloadAction<number>) {
       state.value += action.payload
-      state.history.push(state.value)
+      state.history.push({
+        date: new Date().toLocaleTimeString(),
+        value: state.value,
+      })
     },
     send(state, action: PayloadAction<number>) {
       state.value -= action.payload
-      state.history.push(state.value)
+      state.history.push({
+        date: new Date().toLocaleTimeString(),
+        value: state.value,
+      })
     }
   }
 })

@@ -18,7 +18,7 @@ const DepositModal = () => {
 
   const submitDeposit = () => {
     const depositNumber = Number(depositAmount)
-    if (isNaN(depositNumber)) {
+    if (isNaN(depositNumber) || !depositAmount) {
       return alert('Please enter a valid number')
     }
     dispatch(deposit(depositNumber))
@@ -35,6 +35,7 @@ const DepositModal = () => {
         title="Deposit"
       >
         <TextField
+          data-testid="deposit-amount-input"
           fullWidth
           label="Amount"
           helperText="Enter a number"
