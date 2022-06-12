@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import Button from 'components/Button/Button'
 import BaseModal from 'components/TransferModal/BaseModal'
-import { Box, InputAdornment, FormControl, MenuItem, Paper, Select, SelectChangeEvent, TextField, InputLabel, styled, Stack } from '@mui/material'
-import { useAppDispatch } from 'hooks/reduxTypeHook'
+import { Box, InputAdornment, FormControl, MenuItem, TextField, styled, Stack } from '@mui/material'
+import { useAppDispatch, useAppSelector } from 'hooks/reduxTypeHook'
 import { send } from 'redux/slices/balanceSlice'
-import { Container } from '@mui/system'
 
 const Account = styled(Box)`
   width: 100%;
@@ -19,6 +18,7 @@ const SendModal = () => {
   const [ sendMethod, setSendMethod ] = useState('wallet')
 
   const dispatch = useAppDispatch()
+  const balance = useAppSelector((state) => state.balance.value)
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSendMethod(e.target.value)
@@ -86,6 +86,9 @@ const SendModal = () => {
     if (isNaN(sendNumber) || !sendNumber) {
       return alert('Please enter a valid number')
     }
+    if (balance < sendNumber) {
+      return alert('Not enough balance')
+    }
     dispatch(send(sendNumber))
     setModalOpen(false)
   }
@@ -100,7 +103,6 @@ const SendModal = () => {
         title="Deposit"
       >
         <FormControl>
-          {/* <InputLabel id="demo-simple-select-label">Type</InputLabel> */}
           <TextField
             label="Type"
             margin="normal"

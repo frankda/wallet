@@ -1,9 +1,7 @@
-import Button, { ButtonProps as MuiButtonProps } from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import DepositModal from 'components/TransferModal/DepositModal'
 import SendModal from 'components/TransferModal/SendModal'
-import { useState } from 'react'
 
 const WalletOverview = () => {
   return (
